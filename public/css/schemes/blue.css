@@ -1,0 +1,83 @@
+/*
+#0967AA
+#0967AA
+
+*/
+
+@font-face {
+    font-family: "Gtek_Technology";
+    src: url('../../fonts/Gtek_Technology.ttf') format("truetype");
+}
+
+::-moz-selection {
+    color: #ffffff;
+    background: #0967AA;
+}
+
+::selection {
+    color: #ffffff;
+    background: #0967AA;
+}
+
+.btn-col,
+.project-details h5, 
+.project-info h5 {
+border-color: #0967AA;
+color: #0967AA;
+}
+
+.btn-col:hover {
+color: #0967AA;
+}
+
+.section-title h3, 
+.section-title h5,
+.section-title h4,
+.step-no,
+.sub-steps .icon,
+.sub-steps .sub-text,
+.testimonial .happy-client,
+.client-photos .photo-hold {
+border-color:#0967AA;
+}
+
+.color-scheme,
+.service-icon,
+.step-no .no-inner,
+.site-name:hover,
+.project-details .details-list li .strong,  
+.social-icons ul li a:hover {
+color:#0967AA;
+}
+
+.site-name span,
+.photo-overlay h4 {
+background-color: #0967AA;
+}
+
+
+.step-details .sub-steps li:hover .icon {
+background-color: #0967AA;
+color:#ffffff;
+}
+
+.photo-zoom:before {
+	border-color: rgba(0, 255, 255, 0) rgba(255, 0, 255, 0) rgba(149, 165, 166, 1) rgba(255, 255, 10, 0);
+
+}
+
+.nicescroll-cursors {
+background-color: rgba(149, 165, 166, 1) !important;
+}
+
+.contact label{
+    color: #FFFFFF;
+}
+
+.logo{
+    font-family: "Gtek_Technology";
+}
+
+#nav a:hover{
+    color: #1365A6 !important;
+}

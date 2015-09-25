@@ -1,0 +1,30 @@
+{
+  "name": "futuraluz",
+  "version": "0.0.0",
+  "authors": [
+    "Digital Serra tecnologia digital <www.digitalserra.com.br>"
+  ],
+  "description": "Site da Futura Luz Solucoes em LED",
+  "keywords": [
+    "Futura",
+    "Luz",
+    "LED",
+    "Bento",
+    "Goncalves"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "WOW": "https://github.com/matthieua/WOW",
+    "bootstrap": "~3.3.5",
+    "font-awesome": "~4.4.0",
+    "sweetalert": "~1.1.0"
+  }
+}
