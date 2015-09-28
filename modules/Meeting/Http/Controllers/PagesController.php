@@ -20,19 +20,30 @@ use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
 {
-    public $userPermission;
+    public $userPermission, $user, $userRole;
 
     public function __construct()
     {
-        //Find permissions to user logged and passs to controller views
-        $this->userPermission = Defender::findPermissionById(Auth::user()->id);
-        View::share('userPermission', $this->userPermission->name);
+        $this->user = Auth::user();
+
+        View::share('user', $this->user);
     }
 
     public function index()
     {
         return view('meeting::index')
-            ->with('user',Auth::user())
+            ->with('page_name', 'Início');
+    }
+
+    public function users()
+    {
+        return view('meeting::index')
+            ->with('page_name', 'Início');
+    }
+
+    public function user_add()
+    {
+        return view('meeting::index')
             ->with('page_name', 'Início');
     }
 

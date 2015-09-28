@@ -1,5 +1,6 @@
 <?php namespace Modules\Meeting\Providers;
 
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class MeetingServiceProvider extends ServiceProvider {
@@ -21,6 +22,13 @@ class MeetingServiceProvider extends ServiceProvider {
 		$this->registerConfig();
 		$this->registerTranslations();
 		$this->registerViews();
+
+		//Share Variables
+		$client = [
+			'name'=> env('CLIENT_NAME',null),
+			'url'=> env('CLIENT_URL',null),
+		];
+		View::share('client', $client);
 	}
 
 	/**

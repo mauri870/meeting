@@ -55,7 +55,6 @@
             {{--<div class="column col-sm-10 col-xs-11" id="main">--}}
             <div class="column col-sm-12 col-xs-12" id="main">
 
-
                 <!-- top nav -->
                 <div class="navbar navbar-blue navbar-static-top">
                     <div class="navbar-header">
@@ -65,7 +64,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a href="/" class="navbar-brand logo">b</a>
+                        <a href="/" class="navbar-brand logo">{{--<img src="{{ asset('images/favicon.png') }}" width="95%" height="auto" alt="">--}}M</a>
                     </div>
                     <nav class="collapse navbar-collapse" role="navigation">
                         <form class="navbar-form navbar-left">
@@ -77,7 +76,40 @@
                             </div>
                         </form>
 
-                        @include("meeting::includes.$userPermission.topnav")
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href="{{ route('home.index') }}"><i class="glyphicon glyphicon-home"></i> Home</a>
+                            </li>
+                            @shield('admin')
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i> Usuários <span class="glyphicon glyphicon-chevron-down"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ route('admin.users') }}"><i class="fa fa-users"></i> Ver Usuários</a></li>
+                                        <li><a href="{{ route('admin.users.add') }}"><i class="fa fa-user-plus"></i> Adicionar</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-comments"></i> Reuniões <span class="glyphicon glyphicon-chevron-down"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ route('admin.users') }}"><i class="fa fa-comments"></i> Ver Reuniões</a></li>
+                                        <li><a href="{{ route('admin.users.add') }}"><i class="fa fa-plus"></i> Adicionar</a></li>
+                                    </ul>
+                                </li>
+                            @endshield
+                            @shield('responsible')
+                                <li>
+                                    <a href="{{ route('home.admin') }}"><i class="glyphicon glyphicon-dashboard"></i> Reuniões</a>
+                                </li>
+                            @endshield
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> {{ $user->name }} <span class="glyphicon glyphicon-chevron-down"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ route('auth.logout') }}"><i class="fa fa-power-off"></i> Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
 
                     </nav>
                 </div>
@@ -90,11 +122,11 @@
                         @yield('content')
 
                         {{-- Footer --}}
-                        <div class="row">
+                        {{--<div class="row">
                             <div class="col-sm-6">
                                 <a href="#">Twitter</a> <small class="text-muted">|</small> <a href="#">Facebook</a> <small class="text-muted">|</small> <a href="#">Google+</a>
                             </div>
-                        </div>
+                        </div>--}}
 
                         <div class="row" id="footer">
                             <div class="col-sm-6">
@@ -102,7 +134,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <p>
-                                    <a href="#" class="pull-right">©Copyright 2013</a>
+                                    <a href="{{ $client['url'] }}" target="_blank" class="pull-right"><i class="fa fa-registered"></i> {{ $client['name'] or '' }}</a>
                                 </p>
                             </div>
                         </div>
@@ -110,7 +142,7 @@
                         <hr>
 
                         <h4 class="text-center">
-                            <a href="http://bootply.com/96266" target="ext">Download this Template @Bootply</a>
+                            Desenvolvido por  <a href="http://digitalserra.com.br" target="_blank">Digital Serra Tecnologia Digital</a>
                         </h4>
 
                         <hr>
