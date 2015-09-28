@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Artesaos\Defender\Facades\Defender;
 use Artesaos\Defender\Testing\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,9 +23,11 @@ class PagesController extends Controller
 
     public function index()
     {
+        $userPermission = Defender::findPermissionById(Auth::user()->id);
         return view('index')
             ->with('user',Auth::user())
-            ->with('page_name', 'Início');
+            ->with('page_name', 'Início')
+            ->with('userPermission', $userPermission->name);
     }
 
     public function contact(Request $request)
