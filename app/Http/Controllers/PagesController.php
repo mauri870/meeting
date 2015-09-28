@@ -14,20 +14,27 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\Logging\Log;
+use Illuminate\Support\Facades\View;
 use Modules\Admin\Entities\Portfolio;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
 {
+    public $userPermission;
+
+    public function __construct()
+    {
+        //Find permissions to user logged and passs to controller views
+        $this->userPermission = Defender::findPermissionById(Auth::user()->id);
+        View::share('userPermission', $this->userPermission->name);
+    }
 
     public function index()
     {
-        $userPermission = Defender::findPermissionById(Auth::user()->id);
         return view('index')
             ->with('user',Auth::user())
-            ->with('page_name', 'Início')
-            ->with('userPermission', $userPermission->name);
+            ->with('page_name', 'Início');
     }
 
     public function contact(Request $request)
