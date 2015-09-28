@@ -18,8 +18,19 @@ Route::group(['prefix' => 'meeting', 'middleware' => 'auth', 'namespace' => 'Mod
 
     //Admin Permission
     Route::group(['middleware' => 'needsPermission', 'shield' => 'admin'], function () {
+        //Show Users
         Route::get('/users',['as'=>'admin.users', 'uses'=>'PagesController@users']);
-        Route::get('/users/add',['as'=>'admin.users.add', 'uses'=>'PagesController@user_add']);
+
+        //Add Users
+        Route::get('/users/add',['as'=>'admin.users.add', 'uses'=>'PagesController@add_user']);
+        Route::post('/users/add',['as'=>'admin.users.add_post', 'uses'=>'PagesController@add_post']);
+
+
+        //Edit Users
+        Route::get('/users/edit/{id}',['as'=>'admin.users.edit','uses'=>'PagesController@edit']);
+
+        //Delete User
+        Route::get('/users/delete/{id}',['as'=>'admin.users.delete','uses'=>'PagesController@delete']);
     });
 
     //Responsible Routes

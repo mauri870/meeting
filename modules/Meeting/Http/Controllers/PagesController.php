@@ -3,7 +3,7 @@
 namespace Modules\Meeting\Http\Controllers;
 
 use Artesaos\Defender\Facades\Defender;
-use Artesaos\Defender\Testing\User;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -37,11 +37,29 @@ class PagesController extends Controller
 
     public function users()
     {
-        return view('meeting::index')
+        $users = User::all();
+        return view('meeting::users.users')
+            ->with('page_name', 'Usuários')
+            ->with('users', $users);
+    }
+
+    public function delete($id)
+    {
+        $user = User::find($id);
+        $user->delete();
+
+        Session::flash('success','Usuário deletado');
+        return redirect(route('admin.users'));
+    }
+
+
+    public function add_user()
+    {
+        return view('meeting::users.add')
             ->with('page_name', 'Início');
     }
 
-    public function user_add()
+    public function add_post()
     {
         return view('meeting::index')
             ->with('page_name', 'Início');

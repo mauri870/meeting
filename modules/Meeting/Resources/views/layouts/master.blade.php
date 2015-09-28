@@ -19,7 +19,6 @@
     <div class="box">
         <div class="row row-offcanvas row-offcanvas-left">
 
-
             {{--<!-- sidebar  -->
             <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
 
@@ -117,6 +116,35 @@
 
                 <div class="padding">
                     <div class="full col-sm-9">
+                        {{-- Allerts --}}
+                        @if(Session::has('success'))
+                            <p class="alert alert-success">
+                                <a href="#" class="close" data-dismiss="alert"
+                                   aria-label="close">&times;</a>
+                                {{ Session::get('success') }}
+                            </p>
+                        @endif
+                        @unless($errors->isEmpty())
+                            <ul style="list-style: none;">
+                                @foreach($errors->getMessages() as $error)
+                                    <li>
+                                        <p class="alert alert-danger">
+                                            <a href="#" class="close" data-dismiss="alert"
+                                               aria-label="close">&times;</a>
+                                            {{ $error[0] }}
+                                        </p>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endunless
+                        @foreach (Alert::getMessages() as $type => $messages)
+                            @foreach ($messages as $message)
+                                <div class="alert alert-{{ ($type == 'error' ? 'danger' : $type) }}">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    {{ $message }}
+                                </div>
+                                @endforeach
+                                @endforeach
 
                         <!-- content -->
                         @yield('content')

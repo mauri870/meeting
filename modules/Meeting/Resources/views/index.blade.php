@@ -1,5 +1,5 @@
 @extends('meeting::layouts.master')
-@section('title','Início')
+@section('title', $page_name)
 @section('content')
         <!-- content -->
 <div class="row">
