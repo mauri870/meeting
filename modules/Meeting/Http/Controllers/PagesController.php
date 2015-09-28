@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\Meeting\Http\Controllers;
 
 use Artesaos\Defender\Facades\Defender;
 use Artesaos\Defender\Testing\User;
@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Support\Facades\View;
-use Modules\Admin\Entities\Portfolio;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,7 +31,7 @@ class PagesController extends Controller
 
     public function index()
     {
-        return view('index')
+        return view('meeting::index')
             ->with('user',Auth::user())
             ->with('page_name', 'Início');
     }

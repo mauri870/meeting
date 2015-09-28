@@ -43,7 +43,7 @@
             <h3 class="wow fadeInUp" data-wow-delay="0.6s">Desculpe, mas você não pode entrar aqui, acesso restrito!</h3>
 
             <div class="wow bounceIn" data-wow-delay="0.7s">
-                <img src="https://d13yacurqjgara.cloudfront.net/users/677502/screenshots/2151934/security.gif" alt="balloon">
+                <img src="{{ asset('images/errors/401.gif') }}" alt="balloon">
             </div>
             <a href="{{ route('auth.login') }}">
                 <button class="btn btn-default" type="button" style="color:#15AB84"><i

@@ -21,7 +21,7 @@ class RolesAndPermissionSeeder extends Seeder
 
         $userPermission = Defender::createPermission('user','User Permission');
 
-        $responsiblePermission = Defender::createPermission('responsible','Meeting Responsible');
+        $responsiblePermission = Defender::createPermission('responsible','Admin Responsible');
 
         //Admin
         $user = User::find(1);
