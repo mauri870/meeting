@@ -29,7 +29,9 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password','occupation_id'];
+    protected $fillable = [
+        'name', 'email', 'password','occupation_id','phone'
+    ];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -38,6 +40,11 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = ['password', 'remember_token'];
 
+
+    /**
+     * Get the occupations from users
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function occupation()
     {
         return $this->belongsTo('Modules\Meeting\Entities\Occupation');
