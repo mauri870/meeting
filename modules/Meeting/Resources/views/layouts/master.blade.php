@@ -7,6 +7,7 @@
     <meta name="author" content="Digital Serra Tecnologia Digital">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/sweetalert.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -57,20 +58,26 @@
                 <!-- top nav -->
                 <div class="navbar navbar-blue navbar-static-top">
                     <div class="navbar-header">
-                        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                        <button class="navbar-toggle" type="button" data-toggle="collapse"
+                                data-target=".navbar-collapse">
                             <span class="sr-only">Toggle</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a href="/" class="navbar-brand logo">{{--<img src="{{ asset('images/favicon.png') }}" width="95%" height="auto" alt="">--}}M</a>
+                        <a href="/"
+                           class="navbar-brand logo">{{--<img src="{{ asset('images/favicon.png') }}" width="95%" height="auto" alt="">--}}
+                            M</a>
                     </div>
                     <nav class="collapse navbar-collapse" role="navigation">
                         <form class="navbar-form navbar-left">
                             <div class="input-group input-group-sm" style="max-width:360px;">
-                                <input type="text" class="form-control" placeholder="Pesquisar" name="srch-term" id="srch-term">
+                                <input type="text" class="form-control" placeholder="Pesquisar" name="srch-term"
+                                       id="srch-term">
+
                                 <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                    <button class="btn btn-default" type="submit"><i
+                                                class="glyphicon glyphicon-search"></i></button>
                                 </div>
                             </div>
                         </form>
@@ -80,32 +87,43 @@
                                 <a href="{{ route('home.index') }}"><i class="glyphicon glyphicon-home"></i> Home</a>
                             </li>
                             @shield('admin')
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i> Usuários <span class="glyphicon glyphicon-chevron-down"></span></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="{{ route('admin.users') }}"><i class="fa fa-users"></i> Ver Usuários</a></li>
-                                        <li><a href="{{ route('admin.users.add') }}"><i class="fa fa-user-plus"></i> Adicionar</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-comments"></i> Reuniões <span class="glyphicon glyphicon-chevron-down"></span></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="{{ route('admin.users') }}"><i class="fa fa-comments"></i> Ver Reuniões</a></li>
-                                        <li><a href="{{ route('admin.users.add') }}"><i class="fa fa-plus"></i> Adicionar</a></li>
-                                    </ul>
-                                </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i>
+                                    Usuários <span class="glyphicon glyphicon-chevron-down"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ route('admin.users') }}"><i class="fa fa-users"></i> Ver
+                                            Usuários</a></li>
+                                    <li><a href="{{ route('admin.users.add') }}"><i class="fa fa-user-plus"></i>
+                                            Adicionar</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                                            class="fa fa-comments"></i> Reuniões <span
+                                            class="glyphicon glyphicon-chevron-down"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ route('admin.users') }}"><i class="fa fa-comments"></i> Ver Reuniões</a>
+                                    </li>
+                                    <li><a href="{{ route('admin.users.add') }}"><i class="fa fa-plus"></i>
+                                            Adicionar</a></li>
+                                </ul>
+                            </li>
                             @endshield
                             @shield('responsible')
-                                <li>
-                                    <a href="{{ route('home.admin') }}"><i class="glyphicon glyphicon-dashboard"></i> Reuniões</a>
-                                </li>
+                            <li>
+                                <a href="{{ route('home.admin') }}"><i class="glyphicon glyphicon-dashboard"></i>
+                                    Reuniões</a>
+                            </li>
                             @endshield
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> {{ $user->name }} <span class="glyphicon glyphicon-chevron-down"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                                            class="glyphicon glyphicon-user"></i> {{ $user->name }} <span
+                                            class="glyphicon glyphicon-chevron-down"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ route('auth.logout') }}"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li><a href="{{ route('auth.logout') }}"><i class="fa fa-power-off"></i> Logout</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -122,6 +140,13 @@
                                 <a href="#" class="close" data-dismiss="alert"
                                    aria-label="close">&times;</a>
                                 {{ Session::get('success') }}
+                            </p>
+                        @endif
+                        @if(Session::has('danger'))
+                            <p class="alert alert-danger">
+                                <a href="#" class="close" data-dismiss="alert"
+                                   aria-label="close">&times;</a>
+                                {{ Session::get('danger') }}
                             </p>
                         @endif
                         @unless($errors->isEmpty())
@@ -146,38 +171,42 @@
                                 @endforeach
                                 @endforeach
 
-                        <!-- content -->
-                        @yield('content')
+                                        <!-- content -->
+                                @yield('content')
 
-                        {{-- Footer --}}
-                        {{--<div class="row">
-                            <div class="col-sm-6">
-                                <a href="#">Twitter</a> <small class="text-muted">|</small> <a href="#">Facebook</a> <small class="text-muted">|</small> <a href="#">Google+</a>
-                            </div>
-                        </div>--}}
+                                {{-- Footer --}}
+                                {{--<div class="row">
+                                    <div class="col-sm-6">
+                                        <a href="#">Twitter</a> <small class="text-muted">|</small> <a href="#">Facebook</a> <small class="text-muted">|</small> <a href="#">Google+</a>
+                                    </div>
+                                </div>--}}
 
-                        <div class="row" id="footer">
-                            <div class="col-sm-6">
+                                <div class="row" id="footer">
+                                    <div class="col-sm-6">
 
-                            </div>
-                            <div class="col-sm-6">
-                                <p>
-                                    <a href="{{ $client['url'] }}" target="_blank" class="pull-right"><i class="fa fa-registered"></i> {{ $client['name'] or '' }}</a>
-                                </p>
-                            </div>
-                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p>
+                                            <a href="{{ $client['url'] }}" target="_blank" class="pull-right"><i
+                                                        class="fa fa-registered"></i> {{ $client['name'] or '' }}</a>
+                                        </p>
+                                    </div>
+                                </div>
 
-                        <hr>
+                                <hr>
 
-                        <h4 class="text-center">
-                            Desenvolvido por  <a href="http://digitalserra.com.br" target="_blank">Digital Serra Tecnologia Digital</a>
-                        </h4>
+                                <h4 class="text-center">
+                                    Desenvolvido por <a href="http://digitalserra.com.br" target="_blank">Digital Serra
+                                        Tecnologia Digital</a>
+                                </h4>
 
-                        <hr>
+                                <hr>
 
 
-                    </div><!-- /col-9 -->
-                </div><!-- /padding -->
+                    </div>
+                    <!-- /col-9 -->
+                </div>
+                <!-- /padding -->
             </div>
             <!-- /main -->
 
@@ -197,14 +226,19 @@
             <div class="modal-body">
                 <form class="form center-block">
                     <div class="form-group">
-                        <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
+                        <textarea class="form-control input-lg" autofocus=""
+                                  placeholder="What do you want to share?"></textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <div>
                     <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
-                    <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+                    <ul class="pull-left list-inline">
+                        <li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li>
+                        <li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li>
+                        <li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -213,6 +247,7 @@
 <!-- script references -->
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/sweetalert.min.js') }}"></script>
 <script src="{{ asset('js/scripts.js') }}"></script>
 @yield('scripts')
 </body>

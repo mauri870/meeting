@@ -28,11 +28,11 @@
                     <th>{{ $u->name }}</th>
                     <th>{{ 'Tipo' }}</th>
                     <th>{{ $u->email }}</th>
-                    <th>{{ $u->telefone }}</th>
+                    <th>{{ $u->phone }}</th>
                     <th>{{ $u->occupation->name }}</th>
                     <th>
                         <a href="{{ route('admin.users.edit',$u->id) }}" class="btn btn-xs btn-warning" title="Editar"><i class="fa fa-edit"></i></a>
-                        <a href="{{ route('admin.users.delete',$u->id) }}" class="btn btn-xs btn-danger" title="Excluir"><i class="fa fa-close"></i></a>
+                        <button  onclick="click_del('{{ route('admin.users.delete',$u->id) }}')" class="btn btn-xs btn-danger" title="Excluir"><i class="fa fa-close"></i></button>
                     </th>
                 </tr>
             @endforeach
@@ -40,4 +40,23 @@
         </table>
     </div>
 </div><!--/row-->
+@stop
+@section('scripts')
+    <script>
+        function click_del(url) {
+            swal({
+                        title: "Aviso",
+                        text: "Tem certeza?",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Sim, tenho!",
+                        cancelButtonText: "Cancelar",
+                        closeOnConfirm: false
+                    },
+                    function(){
+                        window.location.href = url;
+                    });
+        }
+    </script>
 @stop

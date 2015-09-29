@@ -2,7 +2,7 @@
 
 namespace Modules\Meeting\Http\Controllers;
 
-use Artesaos\Defender\Facades\Defender;
+use app\Role;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -17,16 +17,20 @@ use Illuminate\Contracts\Logging\Log;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
+use Modules\Meeting\Entities\Occupation;
+use Prologue\Alerts\Facades\Alert;
 
 class PagesController extends Controller
 {
-    public $userPermission, $user, $userRole;
+    public $userPermission, $user, $userRole, $occupations;
 
     public function __construct()
     {
         $this->user = Auth::user();
 
         View::share('user', $this->user);
+
+        $this->occupations = Occupation::all();
     }
 
     public function index()
@@ -55,14 +59,126 @@ class PagesController extends Controller
 
     public function add_user()
     {
+        $roles = Role::all();
         return view('meeting::users.add')
-            ->with('page_name', 'Início');
+            ->with('page_name', 'Início')
+            ->with('occupations', $this->occupations)
+            ->with('roles', $roles);
     }
 
-    public function add_post()
+    public function add_post(Request $request)
     {
-        return view('meeting::index')
-            ->with('page_name', 'Início');
+        $rules = [
+            'name'=>'required',
+            'email'=>'required',
+            'phone'=>'',
+            'image'=>'image',
+            'occupation'=>'required',
+            'role'=>'required',
+            'password'=>'min:8',
+            'password_confirmation'=>'min:8',
+        ];
+
+        $attributes = [
+            'name'=>'nome',
+            'phone'=>'telefone',
+            'password'=>'senha',
+            'occupation'=>'cargo',
+            'role'=>'permissão',
+            'password_confirmation'=>'confirmação de senha',
+            'image'=>'image',
+        ];
+
+        $validator = Validator::make($request->all(),$rules);
+
+        $validator->setAttributeNames($attributes);
+
+        if($validator->fails()){
+            return redirect()
+                ->back()
+                ->withErrors($validator->errors())
+                ->withInput();
+        }
+
+        //Save on BD
+        $new_user = User::create($request->all());
+
+        $user = User::find($new_user->id);
+        $user->image = $request->file('image')->getClientOriginalExtension();
+        $user->save();
+
+        //Save User image
+        $imageName = $new_user->id . '.' .
+            $request->file('image')->getClientOriginalExtension();
+        $request->file('image')->move(
+            base_path() . '/public/images/projects/', $imageName
+        );
+
+        $request->session()->flash('success','Usuário Cadastrado!');
+        return redirect()->back();
+    }
+
+    public function edit_user($id)
+    {
+        $user = User::find($id);
+        return view('meeting::users.edit')
+            ->with('page_name', 'Editar Usuário')
+            ->with('edit_user',$user);
+    }
+
+    public function edit_post(Request $request, $id)
+    {
+        $rules = [
+            'name'=>'required',
+            'email'=>'required',
+            'phone'=>'',
+            'password'=>'min:8',
+            'password_confirmation'=>'min:8',
+        ];
+
+        $attributes = [
+            'name'=>'nome',
+            'phone'=>'telefone',
+            'password'=>'senha',
+            'password_confirmation'=>'confirmação de senha',
+            'image'=>'image',
+        ];
+
+        $validator = Validator::make($request->all(),$rules);
+
+        $validator->setAttributeNames($attributes);
+
+        if($validator->fails()){
+            return redirect()
+                ->back()
+                ->withErrors($validator->errors())
+                ->withInput();
+        }
+
+        if($request->get('password') != $request->get('password_confirmation')){
+            Session::flash('danger', 'As senhas devem ser iguais!');
+            return redirect(route('admin.users.edit'));
+        }
+
+        //Save on BD
+        $user = User::find($id);
+        $user->fill($request->all());
+        if(!empty($request->file('image'))){
+            File::delete(base_path().'/public/images/users/'.$id.'.'.$user->image_ext);
+
+            $user->image = $request->file('image')->getClientOriginalExtension();
+
+            //Save User image
+            $imageName = $user->id . '.' .
+                $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(
+                base_path() . '/public/images/users/', $imageName
+            );
+        }
+        $user->save();
+
+        $request->session()->flash('success','Usuário atualizado!');
+        return redirect()->back();
     }
 
     public function contact(Request $request)

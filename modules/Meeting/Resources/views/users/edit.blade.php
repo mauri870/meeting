@@ -5,13 +5,13 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="text-center">
-            Cadastrar usuário
+            Editar usuário
         </h1>
     </div>
     <div class="col-md-8 col-md-offset-2">
-        {!! Form::open(['url'=>route('admin.users.add_post')]) !!}
+        {!! Form::model($edit_user, array('route' => array('admin.users.post_edit', $edit_user->id))) !!}
         @include('meeting::forms.users')
-        {!! Form::submit('Cadastrar',['class'=>'btn btn-success']) !!}
+        {!! Form::submit('Editar',['class'=>'btn btn-warning']) !!}
         {!! Form::close() !!}
     </div>
 </div><!--/row-->

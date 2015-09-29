@@ -24,7 +24,8 @@ Route::group(['prefix' => 'meeting', 'middleware' => 'auth', 'namespace' => 'Mod
 
 
         //Edit Users
-        Route::get('/users/edit/{id}', ['as' => 'admin.users.edit', 'uses' => 'PagesController@edit']);
+        Route::get('/users/edit/{id}', ['as' => 'admin.users.edit', 'uses' => 'PagesController@edit_user']);
+        Route::post('/users/edit/{id}', ['as' => 'admin.users.post_edit', 'uses' => 'PagesController@edit_post']);
 
         //Delete User
         Route::get('/users/delete/{id}', ['as' => 'admin.users.delete', 'uses' => 'PagesController@delete']);
