@@ -26,7 +26,9 @@
                 <tr>
                     <th>{{ $u->id }}</th>
                     <th>{{ $u->name }}</th>
-                    <th>{{ 'Tipo' }}</th>
+                    @foreach($u->roles as $role)
+                        <th>{{ $role->name }}</th>
+                    @endforeach
                     <th>{{ $u->email }}</th>
                     <th>{{ $u->phone }}</th>
                     <th>{{ $u->occupation->name }}</th>

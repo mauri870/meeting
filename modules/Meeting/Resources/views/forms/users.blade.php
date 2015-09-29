@@ -35,6 +35,11 @@
 
         <option value="">Selecione...</option>
         @foreach($occupations as $occupation)
+            @if(!empty($edit_user))
+                @if($occupation->name == $edit_user->occupation->name)
+                    <option value="{{ $occupation->id }}" selected>{{ $occupation->name }}</option>
+                @endif
+            @endif
             <option value="{{ $occupation->id }}">{{ $occupation->name }}</option>
         @endforeach
     </select>
@@ -45,7 +50,15 @@
     <select name="role" id="">
         <option value="">Selecione...</option>
         @foreach($roles as $role)
+            @if(!empty($edit_user))
+                @foreach($role->users as $role_user)
+                    @if($role_user->name == $edit_user->name)
+                        <option value="{{ $role->id }}" selected>{{ $role->name }}</option>
+                    @endif
+                @endforeach
+            @endif
             <option value="{{ $role->id }}">{{ $role->name }}</option>
         @endforeach
+
     </select>
 </div>

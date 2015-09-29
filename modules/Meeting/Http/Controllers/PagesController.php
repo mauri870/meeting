@@ -2,7 +2,7 @@
 
 namespace Modules\Meeting\Http\Controllers;
 
-use app\Role;
+use App\Role;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -31,6 +31,8 @@ class PagesController extends Controller
         View::share('user', $this->user);
 
         $this->occupations = Occupation::all();
+
+        $this->roles = Role::all();
     }
 
     public function index()
@@ -41,7 +43,7 @@ class PagesController extends Controller
 
     public function users()
     {
-        $users = User::all();
+        $users = User::with('roles')->get();
         return view('meeting::users.users')
             ->with('page_name', 'Usuários')
             ->with('users', $users);
@@ -59,7 +61,7 @@ class PagesController extends Controller
 
     public function add_user()
     {
-        $roles = Role::all();
+        $roles = Role::with('users')->get();
         return view('meeting::users.add')
             ->with('page_name', 'Início')
             ->with('occupations', $this->occupations)
@@ -121,9 +123,12 @@ class PagesController extends Controller
     public function edit_user($id)
     {
         $user = User::find($id);
+        $roles = Role::with('users')->get();
         return view('meeting::users.edit')
             ->with('page_name', 'Editar Usuário')
-            ->with('edit_user',$user);
+            ->with('edit_user',$user)
+            ->with('occupations', $this->occupations)
+            ->with('roles', $roles);
     }
 
     public function edit_post(Request $request, $id)

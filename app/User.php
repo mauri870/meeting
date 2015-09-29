@@ -34,7 +34,7 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','occupation_id', 'phone'
+        'name', 'email', 'password','occupation_id', 'phone',
     ];
 
     /**
@@ -52,5 +52,14 @@ class User extends Model implements AuthenticatableContract,
     public function occupation()
     {
         return $this->belongsTo('Modules\Meeting\Entities\Occupation');
+    }
+
+    /**
+     * Get the roles from users
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role');
     }
 }
