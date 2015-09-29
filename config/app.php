@@ -168,10 +168,9 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
 
         /*
-         * Artesaos\Defender
+         * Entrust
          * */
-        \Artesaos\Defender\Providers\DefenderServiceProvider::class
-
+        Parsidev\Entrust\EntrustServiceProvider::class,
     ],
 
     /*
@@ -221,15 +220,19 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
+        //Laravel collective
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Module' => Pingpong\Modules\Facades\Module::class,
 
+        //Alerts
         'Alert' => Prologue\Alerts\Facades\Alert::class,
 
+        //Debugbar
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
-        'Defender' => \Artesaos\Defender\Facades\Defender::class
+        //Entrust
+        'Entrust' => Parsidev\Entrust\EntrustFacade::class,
 
     ],
 

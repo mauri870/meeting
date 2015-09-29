@@ -3,6 +3,7 @@
 @section('content')
         <!-- content -->
 <div class="row">
+
     <!-- main col left -->
     <div class="col-sm-5">
 

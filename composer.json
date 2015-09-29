@@ -13,7 +13,7 @@
         "prologue/alerts": "^0.4.0",
         "filp/whoops": " ~1.0",
         "barryvdh/laravel-debugbar": "^2.0",
-        "artesaos/defender": "^0.4.2"
+        "parsidev/entrust": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

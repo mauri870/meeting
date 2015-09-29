@@ -19,13 +19,19 @@ class UsersTableSeeder extends Seeder
             'occupation_id' => 1,
         ]);
 
+        $user = \App\User::find(1);
+        $user->attachRole(2);
+
         DB::table('users')->insert([
             'name' => 'teste',
             'email' => 'teste@gmail.com',
             'phone' => '34534193',
             'password' => bcrypt('12345678'),
-            'occupation_id' => 2,
+            'occupation_id' => 1,
         ]);
+
+        $user2 = \App\User::find(2);
+        $user2->attachRole(1);
 
         DB::table('users')->insert([
             'name' => 'responsible',
@@ -34,5 +40,12 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'occupation_id' => 1,
         ]);
+
+        $user3 = \App\User::find(3);
+        $user3->attachRole(1);
+
+
+        $r = \App\Role::find(1);
+        $r->attachPermission(1);
     }
 }

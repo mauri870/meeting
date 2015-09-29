@@ -30,10 +30,6 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
 
-        // Access control using permissions
-        'needsPermission' => \Artesaos\Defender\Middlewares\NeedsPermissionMiddleware::class,
-
-        // Simpler access control, uses only the groups
-        'needsRole' => \Artesaos\Defender\Middlewares\NeedsRoleMiddleware::class
+        'needs_role' => \App\Http\Middleware\CheckForRole::class,
     ];
 }

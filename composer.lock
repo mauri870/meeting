@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f82244e5b26a0050ee12ad031762bc91",
-    "content-hash": "49e2682b6a659a207999b6c7a54a645b",
+    "hash": "daff59032842c23ee5e33f62cf7761d1",
+    "content-hash": "45a2725e4ed9ea0ee3fce8a826817c67",
     "packages": [
         {
             "name": "anhskohbo/no-captcha",
@@ -51,62 +51,6 @@
                 "recaptcha"
             ],
             "time": "2015-09-07 06:33:36"
-        },
-        {
-            "name": "artesaos/defender",
-            "version": "v0.4.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/artesaos/defender.git",
-                "reference": "a04cc4a3e36464d45f10905579392c5aaf86c8d6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/artesaos/defender/zipball/a04cc4a3e36464d45f10905579392c5aaf86c8d6",
-                "reference": "a04cc4a3e36464d45f10905579392c5aaf86c8d6",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/contracts": "~5.1",
-                "illuminate/database": "~5.1",
-                "illuminate/http": "~5.1",
-                "illuminate/support": "~5.1",
-                "illuminate/view": "~5.1",
-                "php": ">=5.5.9"
-            },
-            "require-dev": {
-                "fabpot/php-cs-fixer": "~2.0",
-                "fzaninotto/faker": "~1.5",
-                "orchestra/testbench": "~3.0",
-                "phpspec/phpspec": "~2.1",
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Artesaos\\Defender\\": "src/Defender/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Andreo Vieira",
-                    "email": "andreoav@gmail.com"
-                },
-                {
-                    "name": "Vagner do Carmo",
-                    "email": "vluzrmos@gmail.com"
-                },
-                {
-                    "name": "Luiz Vinicius Reis",
-                    "email": "luiz.vinicius73@gmail.com"
-                }
-            ],
-            "description": "Roles & Permissions for Laravel 5",
-            "time": "2015-09-11 21:46:05"
         },
         {
             "name": "barryvdh/laravel-debugbar",
@@ -1589,6 +1533,61 @@
                 "php"
             ],
             "time": "2015-09-19 14:15:08"
+        },
+        {
+            "name": "parsidev/entrust",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parsidev/entrust.git",
+                "reference": "933a3bd0ea15934c0d6e95b137bd0ba814f2ae7d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/parsidev/entrust/zipball/933a3bd0ea15934c0d6e95b137bd0ba814f2ae7d",
+                "reference": "933a3bd0ea15934c0d6e95b137bd0ba814f2ae7d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "5.1.x",
+                "illuminate/support": "5.1.x",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "illuminate/database": "5.1.x",
+                "mockery/mockery": "dev-master",
+                "phpunit/phpunit": "~4.1",
+                "sami/sami": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/commands"
+                ],
+                "psr-4": {
+                    "Parsidev\\Entrust\\": "src/Entrust/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mohammad Reza Parsaeian",
+                    "email": "info@parsidev.ir"
+                }
+            ],
+            "description": "This package provides a flexible way to add Role-based Permissions to Laravel 5.1",
+            "keywords": [
+                "acl",
+                "auth",
+                "illuminate",
+                "laravel",
+                "permission",
+                "roles"
+            ],
+            "time": "2015-07-19 16:25:24"
         },
         {
             "name": "pingpong/generators",
@@ -3918,7 +3917,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "parsidev/entrust": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Artesaos\Defender\Facades\Defender;
 use App\User;
+use App\Role;
+use App\Permission;
 
 class RolesAndPermissionSeeder extends Seeder
 {
@@ -13,29 +14,30 @@ class RolesAndPermissionSeeder extends Seeder
      */
     public function run()
     {
-        $makeAdminRole = Defender::createRole('admin');
+        //Create the roles
+        $user = new Role();
+        $user->name         = 'user';
+        $user->display_name = 'Normal user'; // optional
+        $user->description  = ''; // optional
+        $user->save();
 
-        $makeUserRole = Defender::createRole('user');
+        $admin = new Role();
+        $admin->name         = 'admin';
+        $admin->display_name = 'User Administrator'; // optional
+        $admin->description  = 'User is allowed to manage and edit other users'; // optional
+        $admin->save();
 
-        $permission = Defender::createPermission('admin','All Admin Permissions');
 
-        $userPermission = Defender::createPermission('user','User Permission');
+        //Create the permissions
 
-        $responsiblePermission = Defender::createPermission('responsible','Admin Responsible');
+        $adminPermission = new Permission();
+        $adminPermission->name = 'admin';
+        $adminPermission->display_name = 'Administrador'; // optional
 
-        //Admin
-        $user = User::find(1);
-        $user->attachRole($makeAdminRole);
-        $user->attachPermission($permission);
+        // Allow a user to...
+        $adminPermission->description  = 'All permissions'; // optional
+        $adminPermission->save();
 
-        //User
-        $user = User::find(2);
-        $user->attachRole($makeUserRole);
-        $user->attachPermission($userPermission);
 
-        //Responsible meeting
-        $user = User::find(3);
-        $user->attachRole($makeAdminRole);
-        $user->attachPermission($responsiblePermission);
     }
 }
