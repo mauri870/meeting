@@ -35,6 +35,7 @@
                     <th>
                         <a href="{{ route('admin.users.edit',$u->id) }}" class="btn btn-xs btn-warning" title="Editar"><i class="fa fa-edit"></i></a>
                         <button  onclick="click_del('{{ route('admin.users.delete',$u->id) }}')" class="btn btn-xs btn-danger" title="Excluir"><i class="fa fa-close"></i></button>
+                        <a href="{{ route('admin.users.edit',$u->id) }}" class="btn btn-xs btn-info" title="Adicionar permissão"><i class="fa fa-plus"></i></a>
                     </th>
                 </tr>
             @endforeach

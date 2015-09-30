@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 use Modules\Meeting\Entities\Occupation;
 use Prologue\Alerts\Facades\Alert;
+use Illuminate\Support\Facades\File;
 
 class PagesController extends Controller
 {
@@ -65,6 +66,8 @@ class PagesController extends Controller
         $user = User::find($id);
         $user->delete();
 
+        File::delete(base_path().'/public/images/users/'.$id.'.'.$user->image_ext);
+
         Session::flash('success','Usuário deletado');
         return redirect(route('admin.users'));
     }
@@ -92,7 +95,7 @@ class PagesController extends Controller
     public function add_post(Request $request)
     {
         $rules = [
-            'name'=>'required',
+            'name'=>'required|unique:users',
             'email'=>'required|email',
             'phone'=>'min:8',
             'image'=>'image',
@@ -107,9 +110,8 @@ class PagesController extends Controller
             'password'=>'senha',
             'occupation'=>'cargo',
             'password_confirmation'=>'confirmação de senha',
-            'image'=>'image',
+            'image'=>'imagem',
         ];
-
         $validator = Validator::make($request->all(),$rules);
 
         $validator->setAttributeNames($attributes);
@@ -121,18 +123,33 @@ class PagesController extends Controller
                 ->withInput();
         }
 
+        //Verify if the password_confirmation matches with the password field
+        if($request->get('password') != $request->get('password_confirmation')){
+            Session::flash('danger', 'As senhas devem ser iguais!');
+            return redirect(route('admin.users.add'));
+        }
+
         //Save on BD
-        $new_user = User::create($request->all());
+        $new_user = User::create([
+            'name'=> $request->get('name'),
+            'email'=> $request->get('email'),
+            'phone'=> $request->get('phone'),
+            'occupation_id'=> $request->get('occupation'),
+            'password'=> bcrypt($request->get('password')),
+        ]);
 
         $user = User::find($new_user->id);
-        $user->image = $request->file('image')->getClientOriginalExtension();
+        $user->image_ext = $request->file('image')->getClientOriginalExtension();
         $user->save();
+
+        //Atraching the user role
+        $new_user->attachRole(1);
 
         //Save User image
         $imageName = $new_user->id . '.' .
             $request->file('image')->getClientOriginalExtension();
         $request->file('image')->move(
-            base_path() . '/public/images/projects/', $imageName
+            base_path() . '/public/images/users/', $imageName
         );
 
         $request->session()->flash('success','Usuário Cadastrado!');
@@ -168,11 +185,10 @@ class PagesController extends Controller
         $rules = [
             'name'=>'required',
             'email'=>'required',
-            'phone'=>'',
+            'phone'=>'min:8',
             'password'=>'min:8',
             'password_confirmation'=>'min:8',
             'occupation'=>'required',
-            'role'=>'required',
         ];
 
         $attributes = [
@@ -181,7 +197,6 @@ class PagesController extends Controller
             'password'=>'senha',
             'password_confirmation'=>'confirmação de senha',
             'image'=>'image',
-            'role'=>'permissão',
             'occupation'=>'cargo',
         ];
 
@@ -196,26 +211,36 @@ class PagesController extends Controller
                 ->withInput();
         }
 
-        if($request->get('password') != $request->get('password_confirmation')){
-            Session::flash('danger', 'As senhas devem ser iguais!');
-            return redirect(route('admin.users.edit'));
+        if($request->get('password') != '') {
+            if ($request->get('password') != $request->get('password_confirmation')) {
+                Session::flash('danger', 'As senhas devem ser iguais!');
+                return redirect(route('admin.users.edit'));
+            }
         }
 
         //Save on BD
         $user = User::find($id);
-        $user->fill([
-            'name'=> $request->get('name'),
-            'email'=> $request->get('email'),
-            'phone'=> $request->get('phone'),
-            'password'=> bcrypt($request->get('password')),
-        ]);
-
-        dd($role = Role::find($request->get('role'))->users()->save($user));
+        if($request->get('password') == '') {
+            $user->fill([
+                'name'=> $request->get('name'),
+                'email'=> $request->get('email'),
+                'phone'=> $request->get('phone'),
+                'occupation_id'=>$request->get('occupation'),
+            ]);
+        }else{
+            $user->fill([
+                'name'=> $request->get('name'),
+                'email'=> $request->get('email'),
+                'phone'=> $request->get('phone'),
+                'password'=> bcrypt($request->get('password')),
+                'occupation_id'=>$request->get('occupation'),
+            ]);
+        }
 
         if(!empty($request->file('image'))){
             File::delete(base_path().'/public/images/users/'.$id.'.'.$user->image_ext);
 
-            $user->image = $request->file('image')->getClientOriginalExtension();
+            $user->image_ext = $request->file('image')->getClientOriginalExtension();
 
             //Save User image
             $imageName = $user->id . '.' .

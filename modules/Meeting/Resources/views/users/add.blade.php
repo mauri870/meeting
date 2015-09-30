@@ -9,7 +9,7 @@
         </h1>
     </div>
     <div class="col-md-8 col-md-offset-2">
-        {!! Form::open(['url'=>route('admin.users.add_post')]) !!}
+        {!! Form::open(['url'=>route('admin.users.add_post'),'files'=>'true']) !!}
         @include('meeting::forms.users')
         {!! Form::submit('Cadastrar',['class'=>'btn btn-success']) !!}
         {!! Form::close() !!}

@@ -9,7 +9,7 @@
         </h1>
     </div>
     <div class="col-md-8 col-md-offset-2">
-        {!! Form::model($edit_user, array('route' => array('admin.users.post_edit', $edit_user->id))) !!}
+        {!! Form::model($edit_user, array('route' => array('admin.users.post_edit', $edit_user->id),'files'=>'true')) !!}
         @include('meeting::forms.users')
         {!! Form::submit('Editar',['class'=>'btn btn-warning']) !!}
         {!! Form::close() !!}
