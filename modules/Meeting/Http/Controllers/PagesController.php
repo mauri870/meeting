@@ -29,18 +29,23 @@ class PagesController extends Controller
         $this->user = Auth::user();
 
         View::share('user', $this->user);
-
-        $this->occupations = Occupation::all();
-
-        $this->roles = Role::all();
     }
 
+    /**
+     * Returns the index page
+     *
+     * @return mixed
+     */
     public function index()
     {
         return view('meeting::index')
             ->with('page_name', 'Início');
     }
 
+    /**
+     * Return the users page
+     * @return mixed
+     */
     public function users()
     {
         $users = User::with('roles')->get();
@@ -49,6 +54,12 @@ class PagesController extends Controller
             ->with('users', $users);
     }
 
+    /**
+     * Process the delete user request
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function delete($id)
     {
         $user = User::find($id);
@@ -59,26 +70,35 @@ class PagesController extends Controller
     }
 
 
+    /**
+     * Add new user
+     *
+     * @return mixed
+     */
     public function add_user()
     {
         $roles = Role::with('users')->get();
+        $occupations = Occupation::all()->lists('name','id')->toArray();
         return view('meeting::users.add')
             ->with('page_name', 'Início')
-            ->with('occupations', $this->occupations)
+            ->with('occupations', $occupations)
             ->with('roles', $roles);
     }
 
+    /**
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
     public function add_post(Request $request)
     {
         $rules = [
             'name'=>'required',
-            'email'=>'required',
-            'phone'=>'',
+            'email'=>'required|email',
+            'phone'=>'min:8',
             'image'=>'image',
             'occupation'=>'required',
-            'role'=>'required',
-            'password'=>'min:8',
-            'password_confirmation'=>'min:8',
+            'password'=>'required|min:8',
+            'password_confirmation'=>'required|min:8',
         ];
 
         $attributes = [
@@ -86,7 +106,6 @@ class PagesController extends Controller
             'phone'=>'telefone',
             'password'=>'senha',
             'occupation'=>'cargo',
-            'role'=>'permissão',
             'password_confirmation'=>'confirmação de senha',
             'image'=>'image',
         ];
@@ -120,17 +139,30 @@ class PagesController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Edit specific user
+     *
+     * @param $id
+     * @return mixed
+     */
     public function edit_user($id)
     {
         $user = User::find($id);
-        $roles = Role::with('users')->get();
+        $occupations = Occupation::all()->lists('name','id')->toArray();
+        /*$roles = Role::with('users')->get();*/
         return view('meeting::users.edit')
             ->with('page_name', 'Editar Usuário')
-            ->with('edit_user',$user)
-            ->with('occupations', $this->occupations)
-            ->with('roles', $roles);
+            ->with('occupations', $occupations)
+            ->with('edit_user',$user);
     }
 
+    /**
+     * Process the post request from the edit_user
+     *
+     * @param Request $request
+     * @param $id
+     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function edit_post(Request $request, $id)
     {
         $rules = [
@@ -139,6 +171,8 @@ class PagesController extends Controller
             'phone'=>'',
             'password'=>'min:8',
             'password_confirmation'=>'min:8',
+            'occupation'=>'required',
+            'role'=>'required',
         ];
 
         $attributes = [
@@ -147,6 +181,8 @@ class PagesController extends Controller
             'password'=>'senha',
             'password_confirmation'=>'confirmação de senha',
             'image'=>'image',
+            'role'=>'permissão',
+            'occupation'=>'cargo',
         ];
 
         $validator = Validator::make($request->all(),$rules);
@@ -167,7 +203,15 @@ class PagesController extends Controller
 
         //Save on BD
         $user = User::find($id);
-        $user->fill($request->all());
+        $user->fill([
+            'name'=> $request->get('name'),
+            'email'=> $request->get('email'),
+            'phone'=> $request->get('phone'),
+            'password'=> bcrypt($request->get('password')),
+        ]);
+
+        dd($role = Role::find($request->get('role'))->users()->save($user));
+
         if(!empty($request->file('image'))){
             File::delete(base_path().'/public/images/users/'.$id.'.'.$user->image_ext);
 
@@ -184,57 +228,5 @@ class PagesController extends Controller
 
         $request->session()->flash('success','Usuário atualizado!');
         return redirect()->back();
-    }
-
-    public function contact(Request $request)
-    {
-        $rules = [
-            'nome'=>'required|min:1',
-            'email'=>'required|email',
-            'telefone'=>'required|regex:/^\([1-9]{2}\) [2-9][0-9]{3,4}\-[0-9]{4}$/',
-            'mensagem'=>'required|min:10',
-            'g-recaptcha-response' => 'required|captcha'
-        ];
-
-        $messages = [
-            'nome.min'=>'O campo :atribute precisa ser preenchido!',
-            'telefone.regex'=>'O campo telefone precisa estar no padrão (xx) xxxxx-xxxx!',
-            'g-recaptcha-response.required'=>'Você precisa confirmar que não é um robô!',
-            'g-recaptcha-response.captcha'=>'O ReCAPTCHA precisa ser um código CAPTCHA válido!'
-        ];
-
-        $validator = Validator::make($request->all(),$rules,$messages);
-
-        if($validator->fails()){
-            return redirect()
-                ->to(URL::previous().'#section-contact')
-                ->withErrors($validator->errors())
-                ->withInput();
-        }
-
-
-        //Enviar email
-
-        Mail::send('email.template',
-        array(
-            'site_domain' => 'digitalserra.com.br',
-
-            'nome' => $request->get('nome'),
-            'email' => $request->get('email'),
-            'telefone' => $request->get('telefone'),
-            'mensagem' => $request->get('mensagem')
-        ), function($message)
-        {
-            $message->from(env('MAIL_USERNAME', null));
-            $message->to(env('MAIL_USERNAME', null), 'Site Admin')->subject('Contato do site digitalserra.com.br');
-        });
-
-        //Log Users action
-        \Log::info('Usuário com ip '.$request->getClientIp(). ' enviou um email pelo site');
-
-        //Redirect back
-        $request->session()->flash('success','Obrigado por nos contatar!');
-        return redirect()
-            ->to(URL::previous().'#section-contact');
     }
 }
