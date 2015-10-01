@@ -38,9 +38,10 @@ class PostsController extends Controller {
      */
 	public function index()
 	{
+		$posts = Post::where('published','=',1)->orderBy('updated_at','desc')->get();
 		return view('meeting::posts.index')
 			->with('page_name','Posts')
-			->with('posts',$this->posts);
+			->with('posts',$posts);
 	}
 
 	/**
