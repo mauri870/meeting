@@ -10,18 +10,14 @@ Route::group(['prefix' => 'meeting', 'middleware' => 'auth', 'namespace' => 'Mod
         Route::get('/posts', ['as' => 'home.posts', 'uses' => 'PostsController@index']);
 
         //Show specific post
-        Route::get('/posts/{id}', ['as' => 'home.posts.show', 'uses' => 'PostsController@show']);
+        Route::get('/posts/all/{id}', ['as' => 'home.posts.show', 'uses' => 'PostsController@show']);
 
-        //Add Users
-        Route::get('/users/add', ['as' => 'admin.users.add', 'uses' => 'PagesController@add_user']);
-        Route::post('/users/add', ['as' => 'admin.users.add_post', 'uses' => 'PagesController@add_post']);
+        //Show posts for logged user
+        Route::get('/posts/your', ['as' => 'home.posts.your', 'uses' => 'PostsController@your']);
 
-        //Edit Users
-        Route::get('/users/edit/{id}', ['as' => 'admin.users.edit', 'uses' => 'PagesController@edit_user']);
-        Route::post('/users/edit/{id}', ['as' => 'admin.users.post_edit', 'uses' => 'PagesController@edit_post']);
-
-        //Delete User
-        Route::get('/users/delete/{id}', ['as' => 'admin.users.delete', 'uses' => 'PagesController@delete']);
+        //Add new post
+        Route::get('/posts/add', ['as' => 'home.posts.add', 'uses' => 'PostsController@add']);
+        Route::post('/posts/add', ['as' => 'home.posts.add_post', 'uses' => 'PostsController@add_post']);
     //End Posts
 
     //Permission Routes

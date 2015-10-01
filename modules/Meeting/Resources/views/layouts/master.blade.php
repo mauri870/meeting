@@ -116,9 +116,9 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="{{ route('home.posts') }}"><i class="fa fa-comments"></i> Ver Posts</a>
                                     </li>
-                                    <li><a href="{{ route('admin.users.add') }}"><i class="fa fa-eye"></i>
+                                    <li><a href="{{ route('home.posts.your') }}"><i class="fa fa-eye"></i>
                                             Seus Posts</a></li>
-                                    <li><a href="{{ route('admin.users.add') }}"><i class="fa fa-plus"></i>
+                                    <li><a href="{{ route('home.posts.add') }}"><i class="fa fa-plus"></i>
                                             Novo Post</a></li>
                                 </ul>
                             </li>
@@ -256,6 +256,17 @@
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/sweetalert.min.js') }}"></script>
 <script src="{{ asset('js/scripts.js') }}"></script>
+
+{{-- Other scripts --}}
+<script src="//cdn.ckeditor.com/4.5.3/standard/ckeditor.js"></script>
 @yield('scripts')
+
+{{--Ckeditor--}}
+<script type="text/javascript">
+    CKEDITOR.replace( 'ckeditor_replace',
+            {
+                toolbar : 'simple'
+            })
+</script>
 </body>
 </html>

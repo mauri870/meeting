@@ -26,13 +26,9 @@
                     <div class="span8">
                         <p></p>
                         <p>
-                            <i class="fa fa-user"></i> por <a href="#">{{ $post->user->name }}</a>
+                            <i class="fa fa-user"></i>Postado por <a href="#">{{ $post->user->name }}</a>
                             | <i class="fa fa-calendar"></i> {{ $post->updated_at->format('d/m/Y H:m:s') }}
-                            | <i class="fa fa-comment"></i> <a href="#">3 Comentário(s)</a>
-                            | <i class="fa fa-tags"></i> Tags : <a href="#"><span class="label label-info">Snipp</span></a>
-                            <a href="#"><span class="label label-info">Bootstrap</span></a>
-                            <a href="#"><span class="label label-info">UI</span></a>
-                            <a href="#"><span class="label label-info">growth</span></a>
+                            {{--| <i class="fa fa-comment"></i> <a href="#">3 Comentário(s)</a>--}}
                         </p>
                     </div>
                 </div>

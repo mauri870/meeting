@@ -6,9 +6,11 @@ class Post extends Model {
 
     protected $fillable = [
         'user_id',
-        'name',
+        'title',
         'content',
         'published',
+        'tags',
+        'image_url',
     ];
 
     /**
@@ -30,5 +32,4 @@ class Post extends Model {
     {
         return $this->belongsToMany('Modules\Meeting\Entities\Occupation');
     }
-
 }
