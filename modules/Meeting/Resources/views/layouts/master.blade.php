@@ -86,35 +86,42 @@
                             <li>
                                 <a href="{{ route('home.index') }}"><i class="glyphicon glyphicon-home"></i> Home</a>
                             </li>
-                            @shield('admin')
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i>
-                                    Usuários <span class="glyphicon glyphicon-chevron-down"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{ route('admin.users') }}"><i class="fa fa-users"></i> Ver
-                                            Usuários</a></li>
-                                    <li><a href="{{ route('admin.users.add') }}"><i class="fa fa-user-plus"></i>
-                                            Adicionar</a></li>
-                                </ul>
-                            </li>
+                            @if(Auth::user()->hasRole('admin'))
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i>
+                                        Usuários <span class="glyphicon glyphicon-chevron-down"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ route('admin.users') }}"><i class="fa fa-users"></i> Ver
+                                                Usuários</a></li>
+                                        <li><a href="{{ route('admin.users.add') }}"><i class="fa fa-user-plus"></i>
+                                                Adicionar</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                                                class="fa fa-suitcase"></i> Reuniões <span
+                                                class="glyphicon glyphicon-chevron-down"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ route('admin.users') }}"><i class="fa fa-suitcase"></i> Ver Reuniões</a>
+                                        </li>
+                                        <li><a href="{{ route('admin.users.add') }}"><i class="fa fa-plus"></i>
+                                                Adicionar</a></li>
+                                    </ul>
+                                </li>
+                            @endif
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                                            class="fa fa-comments"></i> Reuniões <span
+                                            class="fa fa-comments"></i> Posts <span
                                             class="glyphicon glyphicon-chevron-down"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ route('admin.users') }}"><i class="fa fa-comments"></i> Ver Reuniões</a>
+                                    <li><a href="{{ route('home.posts') }}"><i class="fa fa-comments"></i> Ver Posts</a>
                                     </li>
+                                    <li><a href="{{ route('admin.users.add') }}"><i class="fa fa-eye"></i>
+                                            Seus Posts</a></li>
                                     <li><a href="{{ route('admin.users.add') }}"><i class="fa fa-plus"></i>
-                                            Adicionar</a></li>
+                                            Novo Post</a></li>
                                 </ul>
                             </li>
-                            @endshield
-                            @shield('responsible')
-                            <li>
-                                <a href="{{ route('home.admin') }}"><i class="glyphicon glyphicon-dashboard"></i>
-                                    Reuniões</a>
-                            </li>
-                            @endshield
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">

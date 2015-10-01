@@ -30,6 +30,8 @@ class PagesController extends Controller
         $this->user = Auth::user();
 
         View::share('user', $this->user);
+
+        $this->occupations = Occupation::all();
     }
 
     /**
@@ -81,7 +83,7 @@ class PagesController extends Controller
     public function add_user()
     {
         $roles = Role::with('users')->get();
-        $occupations = Occupation::all()->lists('name','id')->toArray();
+        $occupations = $this->occupations->lists('name','id')->toArray();
         return view('meeting::users.add')
             ->with('page_name', 'Início')
             ->with('occupations', $occupations)
@@ -165,7 +167,7 @@ class PagesController extends Controller
     public function edit_user($id)
     {
         $user = User::find($id);
-        $occupations = Occupation::all()->lists('name','id')->toArray();
+        $occupations = $this->occupations->lists('name','id')->toArray();
         /*$roles = Role::with('users')->get();*/
         return view('meeting::users.edit')
             ->with('page_name', 'Editar Usuário')

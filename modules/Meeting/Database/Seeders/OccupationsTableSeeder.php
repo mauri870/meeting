@@ -17,19 +17,19 @@ class OccupationsTableSeeder extends Seeder {
 		Model::unguard();
 
 		DB::table('occupations')->insert([
-			'name' => 'Secretária',
+			'name' => 'PCP',
 			'created_at' => Carbon::now(),
 			'updated_at' => Carbon::now(),
 		]);
 
 		DB::table('occupations')->insert([
-			'name' => 'gerente',
+			'name' => 'Escritório',
 			'created_at' => Carbon::now(),
 			'updated_at' => Carbon::now(),
 		]);
 
 		DB::table('occupations')->insert([
-			'name' => 'Montador',
+			'name' => 'Engenharia',
 			'created_at' => Carbon::now(),
 			'updated_at' => Carbon::now(),
 		]);

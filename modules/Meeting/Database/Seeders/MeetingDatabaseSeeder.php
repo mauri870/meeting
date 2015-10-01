@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-
 use Illuminate\Support\Facades\DB;
 
 class MeetingDatabaseSeeder extends Seeder {
@@ -15,7 +14,6 @@ class MeetingDatabaseSeeder extends Seeder {
 	public function run()
 	{
 		Model::unguard();
-
 		$this->call(OccupationsTableSeeder::class);
 	}
 
