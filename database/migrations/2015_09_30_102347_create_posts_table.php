@@ -18,11 +18,11 @@ class CreatePostsTable extends Migration {
         {
             $table->increments('id');
             $table->string('title');
-            $table->string('image_url');
+            $table->string('image');
             $table->text('content');
             $table->integer('user_id')->unsigned();
             $table->string('tags');
-            $table->boolean('published')->default(false);
+            $table->boolean('published');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });

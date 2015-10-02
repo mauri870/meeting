@@ -38,10 +38,17 @@ class PostsController extends Controller {
      */
 	public function index()
 	{
-		$posts = Post::where('published','=',1)->orderBy('updated_at','desc')->get();
+        $posts = Post::where('published','=',1)->whereHas('occupations', function($q){
+            $q->where('occupation_id','=',Auth::user()->occupation->id);
+        })->with('user')->orderBy('id','desc')->get();
+            return view('meeting::posts.index')
+                ->with('page_name','Posts')
+                ->with('posts',$posts);
+
+		/*$posts = Post::where('published','=',1)->orderBy('id','desc')->get();
 		return view('meeting::posts.index')
 			->with('page_name','Posts')
-			->with('posts',$posts);
+			->with('posts',$posts);*/
 	}
 
 	/**
@@ -50,10 +57,16 @@ class PostsController extends Controller {
 	 */
 	public function show($id)
 	{
-		$post = Post::find($id);
-		return view('meeting::posts.show')
-			->with('page_name',$post->name)
-			->with('post',$post);
+		$post = Post::where('published','=',1)->where('id','=',$id)->whereHas('occupations', function($q){
+            $q->where('occupation_id','=',Auth::user()->occupation->id);
+        })->with('user')->get()->first();
+        if($post == null){
+            return Response::view('errors.401',[],401);
+        }else{
+            return view('meeting::posts.show')
+                ->with('page_name',$post->first()->title)
+                ->with('post',$post->first());
+        }
 	}
 
 	/**
@@ -65,7 +78,7 @@ class PostsController extends Controller {
 		$posts = User::find(Auth::user()->id);
 		return view('meeting::posts.your')
 			->with('page_name','Seus Posts')
-			->with('posts',$posts->posts);
+			->with('posts',$posts->posts()->orderBy('id','desc')->get());
 	}
 
 	/**
@@ -75,7 +88,8 @@ class PostsController extends Controller {
 	public function add()
 	{
 		return view('meeting::posts.add')
-			->with('page_name','Adicionar post');
+			->with('page_name','Adicionar post')
+            ->with('occupations',$this->occupations);
 	}
 
 	/**
@@ -86,14 +100,14 @@ class PostsController extends Controller {
 	{
 		$rules = [
 			'title'=>'required',
-			'image_url'=>'url',
+			'image'=>'image',
 			'content'=>'required|min:5',
 			'published'=>'required',
 		];
 
 		$attributes = [
 			'title'=>'título',
-			'image_url'=>'imagem do post',
+			'image'=>'imagem',
 			'content'=>'conteúdo',
 			'published'=>'publicar?',
 		];
@@ -114,8 +128,9 @@ class PostsController extends Controller {
 
 		//Save to db
 		$new = Post::create($request->all());
+        $new->occupations()->sync($request->get('occupations'));
 
-		Session::flash('success','Usuário deletado');
+		Session::flash('success','Post salvo!');
 		return redirect(route('home.posts.your'));
 	}
 
@@ -130,7 +145,8 @@ class PostsController extends Controller {
         if(Auth::user()->id == Post::find($id)->user->id){
             $page_name = "Editar post";
             $post = Post::find($id);
-            return view('meeting::posts.edit',compact('post','page_name'));
+            $allowed = $post->occupations->lists('id');
+            return view('meeting::posts.edit',compact('post','page_name','allowed'))->with('occupations',$this->occupations);
         }else{
             return Response::view('errors.401',[],401);
         }
@@ -166,7 +182,7 @@ class PostsController extends Controller {
         $post = Post::find($id);
         if(Auth::user()->id == $post->user->id){
             $post->delete();
-            Session::flash('success','Usuário deletado');
+            Session::flash('success','Post deletado');
             return redirect(route('home.posts.your'));
         }else{
             return Response::view('errors.401',[],401);

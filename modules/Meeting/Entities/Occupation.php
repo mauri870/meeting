@@ -27,6 +27,6 @@ class Occupation extends Model {
      */
     public function posts()
     {
-        return $this->belongsToMany('Modules\Meeting\Entities\Post');
+        return $this->belongsToMany('Modules\Meeting\Entities\Post')->withTimestamps();
     }
 }

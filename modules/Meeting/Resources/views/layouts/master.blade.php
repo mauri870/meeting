@@ -268,5 +268,14 @@
                 toolbar : 'simple'
             })
 </script>
+{{-- Toggle all ckeckbox checked--}}
+<script language="JavaScript">
+    function toggle(source) {
+        checkboxes = document.getElementsByName('occupations[]');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+</script>
 </body>
 </html>

@@ -15,10 +15,10 @@ class CreateOccupationPostTable extends Migration {
         Schema::create('occupation_post', function(Blueprint $table)
         {
             $table->integer('occupation_id')->unsigned()->index();
-            $table->foreign('occupation_id')->references('id')->on('occupations');
+            $table->foreign('occupation_id')->references('id')->on('occupations')->onUpdate('cascade')->onDelete('cascade');
 
             $table->integer('post_id')->unsigned()->index();
-            $table->foreign('post_id')->references('id')->on('posts');
+            $table->foreign('post_id')->references('id')->on('posts')->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
         });

@@ -10,7 +10,7 @@ class Post extends Model {
         'content',
         'published',
         'tags',
-        'image_url',
+        'image',
     ];
 
     /**
@@ -30,6 +30,6 @@ class Post extends Model {
      */
     public function occupations()
     {
-        return $this->belongsToMany('Modules\Meeting\Entities\Occupation');
+        return $this->belongsToMany('Modules\Meeting\Entities\Occupation')->withTimestamps();
     }
 }
