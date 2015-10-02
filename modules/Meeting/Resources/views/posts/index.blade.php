@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-md-8">
                         <p>
-                            {{ $post->content }}
+                            {!! $post->content !!}
                         </p>
                         <p><a class="btn btn-default" href="{{ route('home.posts.show',['id'=>$post->id]) }}"><i class="fa fa-link"></i> Leia mais</a></p>
                     </div>

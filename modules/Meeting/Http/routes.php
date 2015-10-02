@@ -18,6 +18,13 @@ Route::group(['prefix' => 'meeting', 'middleware' => 'auth', 'namespace' => 'Mod
         //Add new post
         Route::get('/posts/add', ['as' => 'home.posts.add', 'uses' => 'PostsController@add']);
         Route::post('/posts/add', ['as' => 'home.posts.add_post', 'uses' => 'PostsController@add_post']);
+
+        //Edit post
+        Route::get('/posts/edit/{id}', ['as' => 'home.posts.edit', 'uses' => 'PostsController@edit']);
+        Route::post('/posts/edit/{id}', ['as' => 'home.posts.edit_post', 'uses' => 'PostsController@edit_post']);
+
+        //Delete post
+        Route::get('/posts/delete/{id}', ['as' => 'home.posts.delete', 'uses' => 'PostsController@delete']);
     //End Posts
 
     //Permission Routes

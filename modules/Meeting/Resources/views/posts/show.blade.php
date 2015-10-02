@@ -17,6 +17,7 @@
                 <p><i class="fa fa-calendar"></i> {{ $post->updated_at->format('d/m/Y H:m:s') }}</p>
                 <hr>
                 {!! $post->content !!}
+            </div>
         </div>
         <hr>
 @stop

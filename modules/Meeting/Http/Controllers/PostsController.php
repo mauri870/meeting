@@ -118,4 +118,58 @@ class PostsController extends Controller {
 		Session::flash('success','Usuário deletado');
 		return redirect(route('home.posts.your'));
 	}
+
+    /**
+     * Populate the posts form by id
+     *
+     * @param $id
+     * @return View
+     */
+    public function edit($id)
+	{
+        if(Auth::user()->id == Post::find($id)->user->id){
+            $page_name = "Editar post";
+            $post = Post::find($id);
+            return view('meeting::posts.edit',compact('post','page_name'));
+        }else{
+            return Response::view('errors.401',[],401);
+        }
+	}
+
+    /**
+     * Populate the posts form by id
+     *
+     * @param $id
+     * @return View
+     */
+    public function edit_post(Request $request,$id)
+	{
+        if(Auth::user()->id == Post::find($id)->user->id){
+            $page_name = "Editar post";
+            $post = Post::find($id);
+            $post->fill($request->all());
+            Session::flash('success','Post atualizado');
+            return redirect(route('home.posts.your'));
+        }else{
+            return Response::view('errors.401',[],401);
+        }
+	}
+
+    /**
+     * Populate the posts form by id
+     *
+     * @param $id
+     * @return View
+     */
+    public function delete($id)
+	{
+        $post = Post::find($id);
+        if(Auth::user()->id == $post->user->id){
+            $post->delete();
+            Session::flash('success','Usuário deletado');
+            return redirect(route('home.posts.your'));
+        }else{
+            return Response::view('errors.401',[],401);
+        }
+	}
 }
