@@ -16,9 +16,9 @@
                         <a href="{{ route('home.posts.show',['id'=>$post->id]) }}" class="thumbnail">
                             <img src="http://placehold.it/260x180" alt="">
                         </a>
-                        <a href="{{ route('home.posts.delete',$post->id) }}">
-                            <button class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Deletar</button>
-                        </a>
+                        <button onclick="click_del('{{ route('home.posts.delete',$post->id) }}')"
+                                class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Deletar
+                        </button>
                         <a href="{{ route('home.posts.edit',$post->id) }}">
                             <button class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> Editar</button>
                         </a>
@@ -47,4 +47,23 @@
         </div>
         <hr>
     @endforeach
+@stop
+@section('scripts')
+    <script>
+        function click_del(url) {
+            swal({
+                        title: "Aviso",
+                        text: "Tem certeza?",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Sim, tenho!",
+                        cancelButtonText: "Cancelar",
+                        closeOnConfirm: false
+                    },
+                    function(){
+                        window.location.href = url;
+                    });
+        }
+    </script>
 @stop

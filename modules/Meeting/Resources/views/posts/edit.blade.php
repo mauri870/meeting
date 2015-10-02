@@ -12,7 +12,7 @@
         <div class="col-sm-10">
             <input type="checkbox" onClick="toggle(this)" /> Marcar todos<br/>
             @foreach($occupations as $occupation)
-                {!! Form::checkbox('occupations[]',$value = in_array($occupation->id, $allowed->toArray())) !!} {{ $occupation->name }} <br>
+                {!! Form::checkbox('occupations[]', $occupation->id, in_array($occupation->id, $allowed->toArray())) !!} {{ $occupation->name }} <br>
             @endforeach
         </div>
     </div>

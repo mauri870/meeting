@@ -10,6 +10,7 @@ use Modules\Meeting\Entities\Occupation;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\File;
 
 class PostsController extends Controller {
 
@@ -130,6 +131,17 @@ class PostsController extends Controller {
 		$new = Post::create($request->all());
         $new->occupations()->sync($request->get('occupations'));
 
+        $post = Post::find($new->id);
+        $post->image = $request->file('image')->getClientOriginalExtension();
+        $post->save();
+
+        //Save Post image
+        $imageName = $post->id . '.' .
+            $request->file('image')->getClientOriginalExtension();
+        $request->file('image')->move(
+            base_path() . '/public/images/posts/images', $imageName
+        );
+
 		Session::flash('success','Post salvo!');
 		return redirect(route('home.posts.your'));
 	}
@@ -164,6 +176,24 @@ class PostsController extends Controller {
             $page_name = "Editar post";
             $post = Post::find($id);
             $post->fill($request->all());
+
+            $post->occupations()->detach();
+            $post->occupations()->attach($request->get('occupations'));
+
+            if(!empty($request->file('image'))){
+                File::delete(base_path().'/public/images/posts/images'.$id.'.'.$post->image);
+
+                $post->image = $request->file('image')->getClientOriginalExtension();
+
+                //Save User image
+                $imageName = $post->id . '.' .
+                    $request->file('image')->getClientOriginalExtension();
+                $request->file('image')->move(
+                    base_path() . '/public/images/posts/images', $imageName
+                );
+            }
+            $post->save();
+
             Session::flash('success','Post atualizado');
             return redirect(route('home.posts.your'));
         }else{
@@ -182,6 +212,9 @@ class PostsController extends Controller {
         $post = Post::find($id);
         if(Auth::user()->id == $post->user->id){
             $post->delete();
+
+            File::delete(base_path().'/public/images/posts/images/'.$id.'.'.$post->image);
+
             Session::flash('success','Post deletado');
             return redirect(route('home.posts.your'));
         }else{
