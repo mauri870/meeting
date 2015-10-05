@@ -43,6 +43,9 @@
         </table>
     </div>
 </div><!--/row-->
+<div class="row text-center">
+    {!! $users->render() !!}
+</div>
 @stop
 @section('scripts')
     <script>

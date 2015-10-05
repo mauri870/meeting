@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace app;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
@@ -64,7 +64,7 @@ class User extends Model implements AuthenticatableContract,
      */
     public function roles()
     {
-        return $this->belongsToMany('App\Role');
+        return $this->belongsToMany('app\Role');
     }
 
     /**

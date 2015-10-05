@@ -41,7 +41,7 @@ class PostsController extends Controller {
 	{
         $posts = Post::where('published','=',1)->whereHas('occupations', function($q){
             $q->where('occupation_id','=',Auth::user()->occupation->id);
-        })->with('user')->orderBy('id','desc')->get();
+        })->with('user')->orderBy('id','desc')->paginate(5);
             return view('meeting::posts.index')
                 ->with('page_name','Posts')
                 ->with('posts',$posts);
@@ -58,15 +58,19 @@ class PostsController extends Controller {
 	 */
 	public function show($id)
 	{
-		$post = Post::where('published','=',1)->where('id','=',$id)->whereHas('occupations', function($q){
-            $q->where('occupation_id','=',Auth::user()->occupation->id);
-        })->with('user')->get()->first();
+		if(Auth::user()->id == Post::find($id)->user->id){
+            $post = Post::where('published','=',1)->where('id','=',$id)->with('user')->first();
+        }else{
+            $post = Post::where('published','=',1)->where('id','=',$id)->whereHas('occupations', function($q){
+                $q->where('occupation_id','=',Auth::user()->occupation->id);
+            })->with('user')->first();
+        }
         if($post == null){
             return Response::view('errors.401',[],401);
         }else{
             return view('meeting::posts.show')
                 ->with('page_name',$post->first()->title)
-                ->with('post',$post->first());
+                ->with('post',$post);
         }
 	}
 
@@ -79,7 +83,7 @@ class PostsController extends Controller {
 		$posts = User::find(Auth::user()->id);
 		return view('meeting::posts.your')
 			->with('page_name','Seus Posts')
-			->with('posts',$posts->posts()->orderBy('id','desc')->get());
+			->with('posts',$posts->posts()->orderBy('id','desc')->paginate(5));
 	}
 
 	/**

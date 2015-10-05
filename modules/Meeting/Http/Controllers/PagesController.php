@@ -51,7 +51,7 @@ class PagesController extends Controller
      */
     public function users()
     {
-        $users = User::with('roles')->get();
+        $users = User::with('roles')->paginate(15);
         return view('meeting::users.users')
             ->with('page_name', 'Usuários')
             ->with('users', $users);

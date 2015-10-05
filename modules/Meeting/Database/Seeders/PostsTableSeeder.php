@@ -17,10 +17,11 @@ class PostsTableSeeder extends Seeder {
 		for($i=1;$i<=3;$i++){
 			DB::table('posts')->insert([
 				'title' => 'Post'.$i,
-				'user_id' => $i,
+				'user_id' => 1,
 				'tags' => 'tag1, tag2, tag3, tag4',
 				'content' => 'Conteúdo post'.$i,
-				'published' => true,
+				'image' => 'jpg',
+				'published' => 1,
 				'created_at' => \Carbon\Carbon::now(),
 				'updated_at' => \Carbon\Carbon::now(),
 			]);

@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <a href="{{ route('home.posts.show',['id'=>$post->id]) }}" class="thumbnail">
-                            <img src="http://placehold.it/260x180" alt="">
+                            <img src="{{ asset('images/posts/images/'.$post->id.'.'.$post->image) }}" width="300" height="200px" alt="">
                         </a>
                     </div>
                     <div class="col-md-8">
@@ -36,4 +36,7 @@
         </div>
         <hr>
     @endforeach
+    <div class="row text-center">
+        {!! $posts->render() !!}
+    </div>
 @stop

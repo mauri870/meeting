@@ -45,6 +45,11 @@
             <div class="wow bounceIn" data-wow-delay="0.7s">
                 <img src="{{ asset('images/errors/401.gif') }}" alt="balloon">
             </div>
+            <a href="{{ URL::previous() }}">
+                <button class="btn btn-default" type="button" style="color:#000"><i
+                            class="fa fa-reply"></i> Voltar
+                </button>
+            </a>
             <a href="{{ route('auth.login') }}">
                 <button class="btn btn-default" type="button" style="color:#15AB84"><i
                             class="fa fa-reply-all"></i> Voltar ao início

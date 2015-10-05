@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <a href="{{ route('home.posts.show',['id'=>$post->id]) }}" class="thumbnail">
-                            <img src="http://placehold.it/260x180" alt="">
+                            <img src="{{ asset('images/posts/images/'.$post->id.'.'.$post->image) }}" width="300" height="200px" alt="">
                         </a>
                         <button onclick="click_del('{{ route('home.posts.delete',$post->id) }}')"
                                 class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Deletar
@@ -47,6 +47,9 @@
         </div>
         <hr>
     @endforeach
+    <div class="row text-center">
+        {!! $posts->render() !!}
+    </div>
 @stop
 @section('scripts')
     <script>

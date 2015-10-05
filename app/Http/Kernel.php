@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http;
+namespace app\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Modules\Meeting\Http\Middleware\CheckPostPermission;
@@ -14,11 +14,11 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \App\Http\Middleware\EncryptCookies::class,
+        \app\Http\Middleware\EncryptCookies::class,
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \App\Http\Middleware\VerifyCsrfToken::class,
+        \app\Http\Middleware\VerifyCsrfToken::class,
     ];
 
     /**
@@ -27,10 +27,10 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \App\Http\Middleware\Authenticate::class,
+        'auth' => \app\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'guest' => \app\Http\Middleware\RedirectIfAuthenticated::class,
 
-        'needs_role' => \App\Http\Middleware\CheckForRole::class,
+        'needs_role' => \app\Http\Middleware\CheckForRole::class,
     ];
 }
