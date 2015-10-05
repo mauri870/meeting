@@ -27,6 +27,7 @@ Route::group(['prefix' => 'meeting', 'middleware' => 'auth', 'namespace' => 'Mod
         Route::get('/posts/delete/{id}', ['as' => 'home.posts.delete', 'uses' => 'PostsController@delete']);
     //End Posts
 
+
     //Permission Routes
 
     //Admin Permission
@@ -51,7 +52,7 @@ Route::group(['prefix' => 'meeting', 'middleware' => 'auth', 'namespace' => 'Mod
 
         //Meeting
             //Show Users
-            Route::get('/users', ['as' => 'admin.users', 'uses' => 'PagesController@users']);
+            Route::get('/meetings', ['as' => 'admin.users', 'uses' => 'MeetingController@index']);
 
             //Add Users
             Route::get('/users/add', ['as' => 'admin.users.add', 'uses' => 'PagesController@add_user']);

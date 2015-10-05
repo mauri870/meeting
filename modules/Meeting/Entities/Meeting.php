@@ -17,4 +17,14 @@ class Meeting extends Model {
     {
         return $this->belongsTo('App\User');
     }
+
+    /**
+     * Relationship Between meetings and occupations
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function occupations()
+    {
+        return $this->belongsToMany('Modules\Meeting\Entities\Occupation')->withTimestamps();
+    }
 }

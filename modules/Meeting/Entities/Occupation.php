@@ -22,11 +22,19 @@ class Occupation extends Model {
 
     /**
      * Relationship between occupations and posts
-     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function posts()
     {
         return $this->belongsToMany('Modules\Meeting\Entities\Post')->withTimestamps();
+    }
+
+    /**
+     * Relationship between occupations and meetings
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function meetings()
+    {
+        return $this->belongsToMany('Modules\Meeting\Entities\Meeting')->withTimestamps();
     }
 }
