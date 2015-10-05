@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesAndPermissionSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(\Modules\Meeting\Database\Seeders\PostsTableSeeder::class);
+        $this->call(\Modules\Meeting\Database\Seeders\MeetingTableSeeder::class);
 
         Model::reguard();
     }

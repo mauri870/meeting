@@ -76,4 +76,14 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasMany('Modules\Meeting\Entities\Post');
     }
+
+    /**
+     * Relationship between users and meetings
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function meetings()
+    {
+        return $this->hasMany('Modules\Meeting\Entities\Meeting');
+    }
 }

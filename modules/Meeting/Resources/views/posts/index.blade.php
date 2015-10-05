@@ -6,7 +6,7 @@
             <div class="col-md-10 col-md-offset-2">
                 <div class="row">
                     <div class="col-md-12">
-                        <h4><strong><a href="{{ route('home.posts.show',['id'=>$post->id]) }}">{{ $post->name }}</a></strong></h4>
+                        <h4><strong><a href="{{ route('home.posts.show',['id'=>$post->id]) }}">{{ $post->title }}</a></strong></h4>
                     </div>
                 </div>
                 <div class="row">
