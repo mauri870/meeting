@@ -26,7 +26,7 @@
             "database"
         ],
         "psr-4": {
-            "app\\": "app/",
+            "App\\": "app/",
             "Modules\\": "modules/"
         }
     },

@@ -6,7 +6,7 @@
  * Time: 07:51
  */
 
-namespace app;
+namespace App;
 
 
 use Parsidev\Entrust\EntrustRole;
@@ -15,6 +15,6 @@ class Role extends EntrustRole
 {
     public function users()
     {
-        return $this->belongsToMany('app\User');
+        return $this->belongsToMany('App\User');
     }
 }

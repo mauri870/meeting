@@ -6,7 +6,7 @@
  * Time: 07:53
  */
 
-namespace app;
+namespace App;
 
 
 use Parsidev\Entrust\EntrustPermission;
