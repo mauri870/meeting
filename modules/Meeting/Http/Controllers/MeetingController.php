@@ -34,7 +34,7 @@ class MeetingController extends Controller {
 		})->with('user')->orderBy('id','desc')->paginate(5);
 		return view('meeting::meetings.index')
 			->with('page_name','Reuniões')
-			->with('meetings',$this->meetings);
+			->with('meetings',$meetings);
 	}
 	
 }
