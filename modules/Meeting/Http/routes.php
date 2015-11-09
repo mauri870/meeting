@@ -51,19 +51,19 @@ Route::group(['prefix' => 'meeting', 'middleware' => 'auth', 'namespace' => 'Mod
 
 
         //Meeting
-            //Show Users
-            Route::get('/meetings', ['as' => 'admin.users', 'uses' => 'MeetingController@index']);
+            //Show meetings
+            /*Route::get('/meetings', ['as' => 'admin.users', 'uses' => 'MeetingController@index']);
 
-            //Add Users
+            //Add Meeting
             Route::get('/users/add', ['as' => 'admin.users.add', 'uses' => 'PagesController@add_user']);
             Route::post('/users/add', ['as' => 'admin.users.add_post', 'uses' => 'PagesController@add_post']);
 
-            //Edit Users
+            //Edit Meeting
             Route::get('/users/edit/{id}', ['as' => 'admin.users.edit', 'uses' => 'PagesController@edit_user']);
             Route::post('/users/edit/{id}', ['as' => 'admin.users.post_edit', 'uses' => 'PagesController@edit_post']);
 
-            //Delete User
-            Route::get('/users/delete/{id}', ['as' => 'admin.users.delete', 'uses' => 'PagesController@delete']);
+            //Delete Meeting
+            Route::get('/users/delete/{id}', ['as' => 'admin.users.delete', 'uses' => 'PagesController@delete']);*/
         //End Meeting
     });
 });
