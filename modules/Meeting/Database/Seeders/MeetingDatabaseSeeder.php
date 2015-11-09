@@ -14,7 +14,6 @@ class MeetingDatabaseSeeder extends Seeder {
 	public function run()
 	{
 		Model::unguard();
-		$this->call(OccupationsTableSeeder::class);
 	}
 
 }
